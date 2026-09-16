@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<mavlink>
+  <include>common.xml</include>
+  <enums>
+    <enum name="MAV_CMD">
+      <entry value="44000" name="MAV_CMD_THACO_EXTERNAL_XYZ" hasLocation="false" isDestination="false">
+        <description>THACO External XYZ marker - triggers companion to start external XYZ control</description>
+        <param index="1">Reserved</param>
+        <param index="2">Reserved</param>
+        <param index="3">Reserved</param>
+        <param index="4">Reserved</param>
+        <param index="5">Reserved</param>
+        <param index="6">Reserved</param>
+        <param index="7">Reserved</param>
+      </entry>
+      <entry value="44001" name="MAV_CMD_THACO_ACTUATOR_CONTROL" hasLocation="false" isDestination="false">
+        <description>THACO Actuator Control - controls THACO actuator directly via MAVLink</description>
+        <param index="1">Actuator index (0=A1 ... 7=A8)</param>
+        <param index="2">Value (0-255)</param>
+        <param index="3">Reserved</param>
+        <param index="4">Reserved</param>
+        <param index="5">Reserved</param>
+        <param index="6">Reserved</param>
+        <param index="7">Reserved</param>
+      </entry>
+      <entry value="44002" name="MAV_CMD_THACO_EXTERNAL_XYZ_COMPLETE" hasLocation="false" isDestination="false">
+        <description>THACO External XYZ Complete - starts asynchronous PX4-managed mission resume; keep OFFBOARD setpoints active after IN_PROGRESS until the final ACK; a final ACCEPTED may be replayed for 20 seconds only to the original sender</description>
+        <param index="1">Exact integer trigger ID in range 1..16777216; must match the pending THACO_EXTERNAL_XYZ_TRIGGER trigger_id</param>
+        <param index="2">Reserved</param>
+        <param index="3">Reserved</param>
+        <param index="4">Reserved</param>
+        <param index="5">Reserved</param>
+        <param index="6">Reserved</param>
+        <param index="7">Reserved</param>
+      </entry>
+    </enum>
+  </enums>
+  <messages>
+    <message id="32000" name="THACO_EXTERNAL_XYZ_TRIGGER">
+      <description>THACO External XYZ trigger - sent immediately and retried once per second while waiting for completion</description>
+      <field type="uint32_t" name="trigger_id">Stable per-handoff trigger ID in range 1..16777216</field>
+      <field type="uint32_t" name="time_boot_ms">Timestamp in milliseconds since system boot</field>
+    </message>
+  </messages>
+</mavlink>
